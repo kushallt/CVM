@@ -205,7 +205,7 @@ std::unique_ptr<StmtAST> Parser::parseStatement()
     else if (match({TokenType::Input}))
         newnode = inputStatement();
     else newnode = expression();
-    return std::move(newnode);
+    return newnode;
 }
 std::vector<std::unique_ptr<StmtAST>> Parser::parseProgram()
 

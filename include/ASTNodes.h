@@ -95,8 +95,8 @@ public:
 class Assignment : public ExpressionAST
 {
 public:
-    std::unique_ptr<StmtAST> value;
     std::string var;
+    std::unique_ptr<StmtAST> value;
     int line;
     Assignment(std::string variable, std::unique_ptr<StmtAST> assignvalue, int aline) 
         : var(std::move(variable)), value(std::move(assignvalue)), line(aline){}
@@ -106,7 +106,7 @@ public:
 class Empty : public ExpressionAST
 {
     public:
-    void accept(Visitor &v) override{}
+    void accept(Visitor &v) override{(void)v;}
 };
 
 // -------------------- Statements --------------------
@@ -160,7 +160,7 @@ public:
     DeclStmt(std::string name,
              std::unique_ptr<ExpressionAST> val)
         : VarName(std::move(name)), VarVal(std::move(val)) {}
-    void accept(Visitor &v) override {}
+    void accept(Visitor &v) override {(void)v;}
 };
 
 class AssignStmt : public StmtAST
@@ -172,7 +172,7 @@ public:
     AssignStmt(std::string name,
                std::unique_ptr<ExpressionAST> val)
         : VarName(std::move(name)), VarVal(std::move(val)) {}
-    void accept(Visitor &v) override {}
+    void accept(Visitor &v) override {(void)v;}
 };
 
 

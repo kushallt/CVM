@@ -55,7 +55,7 @@ int main(){
     for(auto &stmt:FinalAST){
         stmt->accept(compiler);
     }
-    // chunk.writeChunk(static_cast<uint8_t>(Opcode::Op_Return), -1);
+    chunk.writeChunk(static_cast<uint8_t>(Opcode::Op_Return), -1);
     // chunk.disassembleChunk("test chunk");
     // for(int i=0; i<chunk.count; i++){
     //     std::cout<<(int)chunk.code[i]<<std::endl;
@@ -65,6 +65,7 @@ int main(){
     vm.resetStack();
     vm.interpret(&chunk, &variables);
     chunk.freeChunk();
+    variables.free_table();
     ObjString str;
     // str.chars = "x";
     // int index = variables.search(&str);

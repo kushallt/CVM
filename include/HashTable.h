@@ -12,7 +12,7 @@ enum class hashState
 struct Entry
 {
     uint32_t hashValue = 0;
-    ObjString *key;
+    ObjString *key = nullptr;
     Value value = NIL_VAL;
     hashState state = hashState::Empty;
 };
@@ -33,7 +33,7 @@ public:
     uint32_t hash_function(ObjString *key)
     {
         uint32_t hash = 2166136261u;
-        for (int i = 0; i < key->chars.size(); i++)
+        for (size_t i = 0; i < key->chars.size(); i++)
         {
             hash ^= (uint8_t)key->chars[i];
             hash *= 16777619;

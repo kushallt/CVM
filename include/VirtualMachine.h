@@ -52,6 +52,7 @@ public:
             case (Opcode::Op_Return):
             {
                 return InterpretResult::INTERPRET_OK;
+                std::cout<<"yes"<<std::endl;
                 break;
             }
             case Opcode::Op_Constant:
