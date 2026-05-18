@@ -1,0 +1,7 @@
+x = input "Enter Number : ";
+
+if(x > 10) print "x is more than 10 \n";
+if(x < 10) print "x is less than 10 \n";
+if (x == 10) print "x is equal to 10 \n"
+
+print "Programme Complete.";
