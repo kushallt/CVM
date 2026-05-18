@@ -13,8 +13,9 @@ class Variable;
 class Assignment;
 class PrintStmt;
 class InputStmt;
-class Visitor
 
+// visitor abstract class for visitor pattern.
+class Visitor
 {
 public:
     virtual void visitBinary(Binary &node) = 0;
@@ -32,7 +33,7 @@ public:
 class StmtAST
 {
 public:
-    virtual void accept(Visitor &v) = 0;
+    virtual void accept(Visitor &v) = 0; // the accept function for visitor pattern
     virtual ~StmtAST() = default;
 };
 
