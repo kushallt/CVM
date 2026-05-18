@@ -1,0 +1,175 @@
+================================================================
+  CVM++ - Setup & Usage Instructions
+================================================================
+
+PREREQUISITES
+-------------
+Before you begin, ensure the following are installed:
+
+  1. C++ Compiler (g++)
+       - Windows: MinGW-w64 (recommended), or MSVC
+       - Linux:   sudo apt install g++
+       - macOS:   xcode-select --install
+
+     Check version:  g++ --version
+     Required:       GCC with C++17 support (GCC 7+)
+
+  2. Make
+       - Windows: comes with MinGW, or install via Chocolatey
+                  choco install make
+       - Linux:   sudo apt install make
+       - macOS:   pre-installed with Xcode tools
+
+     Check version:  make --version
+
+  3. The Makefile is already configured with:
+       CXX      = g++
+       CXXFLAGS = -std=c++17 -Wall -Wextra -g -I include
+       SRC_DIR  = src
+       BUILD_DIR= build
+       TARGET   = main
+
+----------------------------------------------------------------
+
+STEP 1: CLONE / DOWNLOAD THE PROJECT
+--------------------------------------
+  Option A - Git:
+       git clone https://github.com/yourusername/cvm-plus-plus.git
+       cd CVM++
+
+  Option B - Manual:
+       Download and extract the ZIP archive.
+       Open a terminal in the CVM++ folder.
+
+----------------------------------------------------------------
+
+STEP 2: BUILD THE PROJECT
+---------------------------
+  Using Make (recommended):
+       make
+
+  This will:
+    - Create the build/ directory automatically
+    - Compile src/Lexer.cpp, src/parser.cpp, src/main.cpp
+    - Link everything into the executable: main (or main.exe)
+
+  Object files go into build/:
+       build/Lexer.o
+       build/parser.o
+       build/main.o
+
+  Manual compile (if Make is not available):
+       g++ -std=c++17 -Wall -Wextra -g -I include \
+           src/main.cpp src/Lexer.cpp src/parser.cpp \
+           -o main
+
+----------------------------------------------------------------
+
+STEP 3: RUN A PROGRAM
+-----------------------
+  A sample program is provided in the programs/ folder.
+
+  Run the sample:
+       ./main programs/program_code.cvm       (Linux/macOS)
+       main.exe programs\program_code.cvm     (Windows)
+
+  Or use the Makefile shortcut (builds AND runs):
+       make run
+
+  To run your own .cvm file:
+       ./main programs/your_file.cvm
+
+----------------------------------------------------------------
+
+STEP 4: WRITE YOUR OWN .CVM PROGRAMS
+---------------------------------------
+  CVM++ source files use the .cvm extension.
+  Place them in the programs/ folder.
+
+  Then run:
+       ./main programs/yourprogram.cvm
+
+----------------------------------------------------------------
+
+MAKEFILE TARGETS SUMMARY
+--------------------------
+  make            Build the project (default: all)
+  make run        Build and immediately run ./main
+  make clean      Delete build/ folder and main executable
+  make all        Same as make (explicit)
+
+  Example workflow:
+       make clean    <- fresh start
+       make          <- compile everything
+       make run      <- run with programs/program_code.cvm
+
+----------------------------------------------------------------
+
+PROJECT STRUCTURE (for reference)
+------------------------------------
+  CVM++/
+  |-- include/           All header files (.h)
+  |   |-- ASTNodes.h     AST node type definitions
+  |   |-- chunk.h        Bytecode chunk (instructions + pool)
+  |   |-- commons.h      Shared macros and types
+  |   |-- error.h        Error handling utilities
+  |   |-- HashTable.h    Hash map for variable storage
+  |   |-- Lexer.h        Lexer interface
+  |   |-- memory.h       Memory management helpers
+  |   |-- Parser.h       Parser interface
+  |   |-- Tokens.h       Token type enum and struct
+  |   |-- ValueArray.h   Dynamic array for VM values
+  |   |-- VirtualMachine.h  VM interface
+  |
+  |-- src/               Implementation files (.cpp)
+  |   |-- Lexer.cpp      Tokenizer implementation
+  |   |-- parser.cpp     Recursive descent parser
+  |   |-- main.cpp       Entry point
+  |
+  |-- build/             Auto-generated compiled objects
+  |-- programs/          Your .cvm source programs
+  |-- makefile           Build configuration
+  |-- main.exe           Compiled output (Windows)
+
+----------------------------------------------------------------
+
+TROUBLESHOOTING
+---------------
+  Problem : 'g++' not recognized
+  Fix     : Install MinGW-w64 and add it to your PATH.
+            Restart your terminal after installation.
+
+  Problem : 'make' not recognized on Windows
+  Fix     : Install Make via MinGW or Chocolatey.
+            Or compile manually using the g++ command above.
+
+  Problem : fatal error: 'ASTNodes.h' file not found
+  Fix     : Ensure you are running make from the CVM++ root
+            folder, not from inside src/. The -I include flag
+            must resolve correctly.
+
+  Problem : Compilation errors about std::variant / std::optional
+  Fix     : You need C++17. Verify: g++ --version (need GCC 7+)
+            Ensure CXXFLAGS has -std=c++17 in the makefile.
+
+  Problem : Segmentation fault at runtime
+  Fix     : Check your .cvm program for infinite loops or
+            deep recursion. Run with a smaller input first.
+
+  Problem : Unexpected token / parse error at runtime
+  Fix     : Check your .cvm source file for syntax mistakes.
+
+----------------------------------------------------------------
+
+COMPILER FLAGS EXPLAINED
+--------------------------
+  -std=c++17   Use C++17 standard (required)
+  -Wall        Enable all standard warnings
+  -Wextra      Enable extra warnings
+  -g           Include debug symbols (for gdb / debuggers)
+  -I include   Add include/ to the header search path
+
+================================================================
+  For project overview, see README.txt
+  For technical details, see the project report.
+================================================================
